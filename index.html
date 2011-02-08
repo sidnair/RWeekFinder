@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body>
+    <table id="restaurant_list">
+      {% for restaurant in restaurants %}
+        <tr>
+          <td> {{ restaurant.name|escape }} </td>
+          <td> {{ restaurant.opentable_link|escape}} </td>
+          <td> {{ restaurant.description|escape}} </td>
+          <td> {{ restaurant.rating|escape}} </td>
+        </tr>
+      {% endfor %}
+    </table>
+
+    <form action="/new" method="post">
+      <div><input type="text" name="name"></input></div>
+      <div><input type="submit" value="Add Restaurant!"></div>
+    </form>
+  </body>
+</html>
