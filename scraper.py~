@@ -1,0 +1,59 @@
+import pymongo
+import re
+
+def dictify(lst):
+    dicty={}
+    for elt in lst:
+        dicty[lst[0]]=lst[1]
+    return dicty
+
+def total_dictify(lst):
+#    for pos in range(len(lst)):
+#        lst[pos]=dictify(lst[pos])
+    dicty={}
+    for elt in map(dictify,lst):
+        dicty.update(elt)
+    return dicty
+
+file_name = "scrapee.html"
+file_ptr = open(file_name)
+
+file_str = file_ptr.read()
+
+weekdays = ["monday","tuesday","wednesday","thursday","friday"]
+
+#for line in file_str.
+
+
+pattern = re.compile(r'<td align="left" style="width:302px;"><b>([^<]+)</b><br>([^/]+)/td><td align="left">([^<]+)</td><td align="left">([^<]+)</td>')
+
+
+
+iterator = pattern.finditer(file_str)
+
+for line in iterator:
+    keep_going=True
+    dicty =  {"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)}
+    stri=line.group(2)[:-6]
+    str_ls = stri.split(" <br>")
+    for pos in range(len(str_ls)):
+        ls = str_ls[pos].split(": ")
+        lst=ls[1].split(" & ")
+        ls[1]={}
+        for elt in lst:
+            if elt == "Sunday":
+                ls[1]['sunday'] = 1
+            else:
+                ls[1][elt] = 1
+        str_ls[pos] = ls
+
+    if str_ls[0][0] == "Monday - Friday":
+        tmp=str_ls.pop(0)
+        for day in weekdays:
+            str_ls.append([day,tmp[1]])
+    str_ls=total_dictify(str_ls)
+
+#    print dictify(str_ls)
+    str_ls.update({"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)})
+    print str_ls
+
