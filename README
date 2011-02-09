@@ -1,0 +1,13 @@
+HOWTO:
+Date stored in MongoHQ
+username: admin
+password: sekret
+collection name: restaurants
+database: RWeek
+server: Flame
+port: 27041
+
+if you want to access from the console:
+mongo flame.mongohq.com:27041/RWeek -u <user> -p<password>
+
+if you want to set up a read-only acct, email me @ nnythm@gmail.com, my github acct is mnn2104
