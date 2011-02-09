@@ -28,15 +28,24 @@ class RestaurantPostHandler(webapp.RequestHandler):
         q = querier.Querier()
         yelp_result = q.search_yelp(name)
         if yelp_result is not None:
-            #update existing query rather than making a totally new one
-            rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = self.request.get('name')).get()
-            if rest is None:
-                rest = Restaurant()
-            rest.name = name
-            rest.opentable_link = q.get_opentable_link(name)
-            rest.rating = yelp_result['rating']
-            rest.put()
-            self.redirect('/')
+            self.update({
+                'name':name,
+                'rating':yelp_result[0]['avg_rating']
+                }, q)
+        else:
+            #no results found
+            pass
+        self.redirect('/')
+
+    def update(self, data, q):
+        #update existing query rather than making a totally new one
+        rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = self.request.get('name')).get()
+        if rest is None:
+            rest = Restaurant()
+        rest.name = data['name']
+        rest.opentable_link = q.get_opentable_link(data['name'])
+        rest.rating = data['rating']
+        rest.put()
 
 application = webapp.WSGIApplication(
                                      [('/', MainPage),

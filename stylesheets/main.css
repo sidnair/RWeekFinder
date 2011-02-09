@@ -2,3 +2,5 @@ body {
   font-family: Verdana, Helvetica, sans-serif;
   background-color: #DDDDDD;
 }
+
+td { padding:5px 10px 5px 0px }

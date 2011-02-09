@@ -3,17 +3,23 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
-    <table id="restaurant_list">
+    <table id="restaurant_list" border=1>
+      <tr>
+          <td>Name</td>
+          <td>Make a Reservation</td>
+          <td>Description</td>
+          <td>Rating</td>
+        </tr>
       {% for restaurant in restaurants %}
         <tr>
           <td> {{ restaurant.name|escape }} </td>
-          <td> {{ restaurant.opentable_link|escape}} </td>
+          <td> <a href=http://{{restaurant.opentable_link|escape}}>{{restaurant.opentable_link|escape}}</a> </td>
           <td> {{ restaurant.description|escape}} </td>
           <td> {{ restaurant.rating|escape}} </td>
         </tr>
       {% endfor %}
     </table>
-
+    <br />
     <form action="/new" method="post">
       <div><input type="text" name="name"></input></div>
       <div><input type="submit" value="Add Restaurant!"></div>
