@@ -1,5 +1,5 @@
-import pymongo
-from pymongo import Connection
+#import pymongo
+#from pymongo import Connection
 import re
 
 def dictify(lst):
@@ -28,39 +28,43 @@ def get_database():
     db.authenticate(username,password)
     return db
 
-file_name = "scrapee.html"
-file_ptr = open(file_name)
+def get_all():
+    file_name = "scrapee.html"
+    file_ptr = open(file_name)
 
-file_str = file_ptr.read()
+    file_str = file_ptr.read()
 
-weekdays = ["monday","tuesday","wednesday","thursday","friday"]
+    weekdays = ["monday","tuesday","wednesday","thursday","friday"]
 
-#for line in file_str.
+    #for line in file_str.
 
 
-pattern = re.compile(r'<td align="left" style="width:302px;"><b>([^<]+)</b><br>([^/]+)/td><td align="left">([^<]+)</td><td align="left">([^<]+)</td>')
+    pattern = re.compile(r'<td align="left" style="width:302px;"><b>([^<]+)</b><br>([^/]+)/td><td align="left">([^<]+)</td><td align="left">([^<]+)</td>')
 
-iterator = pattern.finditer(file_str)
+    iterator = pattern.finditer(file_str)
 
-db = get_database()
+    #db = get_database()
 
-for line in iterator:
-    keep_going=True
-    dicty =  {"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)}
-    stri=line.group(2)[:-6]
-    str_ls = stri.split(" <br>")
-    for pos in range(len(str_ls)):
-        ls = str_ls[pos].lower().split(": ")
-        lst=ls[1].split(" & ")
-        ls[1]={}
-        for elt in lst:
-            ls[1][elt] = 1
-        str_ls[pos] = ls
-    if str_ls[0][0] == "monday - friday":
-        tmp=str_ls.pop(0)
-        for day in weekdays:
-            str_ls.append([day,tmp[1]])
-    str_ls=total_dictify(str_ls)
-    str_ls.update({"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)})
-    db.restaurants.insert(str_ls)
+    names = []
+    for line in iterator:
+        keep_going=True
+        dicty =  {"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)}
+        stri=line.group(2)[:-6]
+        str_ls = stri.split(" <br>")
+        for pos in range(len(str_ls)):
+            ls = str_ls[pos].lower().split(": ")
+            lst=ls[1].split(" & ")
+            ls[1]={}
+            for elt in lst:
+                ls[1][elt] = 1
+            str_ls[pos] = ls
+        if str_ls[0][0] == "monday - friday":
+            tmp=str_ls.pop(0)
+            for day in weekdays:
+                str_ls.append([day,tmp[1]])
+        str_ls=total_dictify(str_ls)
+        str_ls.update({"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)})
+        #db.restaurants.insert(str_ls)
+        names.append(line.group(1))
+    return names
 

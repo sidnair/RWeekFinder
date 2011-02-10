@@ -3,26 +3,37 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
-    <table id="restaurant_list" border=1>
-      <tr>
-          <td>Name</td>
-          <td>Make a Reservation</td>
-          <td>Description</td>
-          <td>Rating</td>
+    <input id="rSearch" type="text" value="Find a Restaurant"></input>
+    <br />
+    <table id="rViewer" class="tableSorter">
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Make a Reservation</th>
+          <th>Rating</th>
         </tr>
-      {% for restaurant in restaurants %}
+        <tbody id="rViewerBody">
+       {% for restaurant in restaurants %}
         <tr>
           <td> {{ restaurant.name|escape }} </td>
           <td> <a href=http://{{restaurant.opentable_link|escape}}>{{restaurant.opentable_link|escape}}</a> </td>
-          <td> {{ restaurant.description|escape}} </td>
           <td> {{ restaurant.rating|escape}} </td>
         </tr>
-      {% endfor %}
+        {% endfor %}
+      </tbody>
     </table>
     <br />
-    <form action="/new" method="post">
-      <div><input type="text" name="name"></input></div>
-      <div><input type="submit" value="Add Restaurant!"></div>
+    <form>
+      <div><input id="searchName" type="text" name="name"></input></div>
+      <div><input id="restaurantAdder" type="submit" value="Add Restaurant!"></div>
     </form>
+    
+    <table id="newRestaurantPicker"></table>
+
+    <script src="js/jquery-1.5.min.js"></script>
+    <script src="js/jquery.tablesorter.min.js"></script>
+    <script src="js/jquery.quicksearch.js"></script>
+    <script src="js/rlist.js"></script>
+    <script src="js/rweekfinder.js"></script>
   </body>
 </html>
