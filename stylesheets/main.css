@@ -1,8 +1,11 @@
 body {
   font-family: Verdana, Helvetica, sans-serif;
+  text-align:center;
 }
 
-#rSearch { font-size:13pt; }
+.rInput {
+  font-size:13pt;
+}
 
 /* tables */
 table.tablesorter {
@@ -10,13 +13,16 @@ table.tablesorter {
 	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
 	font-size: 8pt;
-	width: 100%;
+	width: 60%;
 	text-align: left;
+  margin-left:auto;
+  margin-right:auto;
 }
+
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #e6EEEE;
 	border: 1px solid #FFF;
-	font-size: 8pt;
+	font-size: 10pt;
 	padding: 4px;
 }
 
@@ -29,8 +35,9 @@ table.tablesorter thead tr .header {
 table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
+	padding-top: 10px;
 	background-color: #FFF;
-	vertical-align: top;
+	vertical-align: center;
 }
 table.tablesorter tbody tr.odd td {
 	background-color:#F0F0F6;

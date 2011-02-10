@@ -3,32 +3,37 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
-    <input id="rSearch" type="text" value="Find a Restaurant"></input>
+    <input class="rinput" id="rSearch" type="text"></input>
+    <input class="rinput" id="address"></input>
     <br />
     <table id="rViewer" class="tableSorter">
         <thead>
         <tr>
           <th>Name</th>
-          <th>Make a Reservation</th>
+          <th>Genre</th>
+          <th>Neighborhood</th>
           <th>Rating</th>
         </tr>
         <tbody id="rViewerBody">
        {% for restaurant in restaurants %}
         <tr>
-          <td> {{ restaurant.name|escape }} </td>
-          <td> <a href=http://{{restaurant.opentable_link|escape}}>{{restaurant.opentable_link|escape}}</a> </td>
-          <td> {{ restaurant.rating|escape}} </td>
+          <td><a href=http://{{restaurant.opentable_link|escape}}>Book</a> - {{restaurant.name|escape}}</td>
+          <!--          <td> <a href=http://{{restaurant.opentable_link|escape}}>{{restaurant.opentable_link|escape}}</a> </td> -->
+          <td> {{restaurant.genre|escape}} </td>
+          <td> {{restaurant.neighborhood|escape}}</td>
+          <td> {{restaurant.rating|escape}} </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
     <br />
+    <!--
     <form>
       <div><input id="searchName" type="text" name="name"></input></div>
       <div><input id="restaurantAdder" type="submit" value="Add Restaurant!"></div>
     </form>
-    
     <table id="newRestaurantPicker"></table>
+    -->
 
     <script src="js/jquery-1.5.min.js"></script>
     <script src="js/jquery.tablesorter.min.js"></script>

@@ -35,5 +35,7 @@ class Querier:
         data = urllib2.urlopen(path).read()
         result = json.loads(data)
         if 'businesses' not in result or len(result['businesses']) == 0:
-           return None 
+            if result['message']['code'] != 0:
+                return result['message']
+            return None 
         return result['businesses']
