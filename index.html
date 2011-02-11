@@ -4,45 +4,52 @@
     <title>Restaurant Week Finder</title>
   </head>
   <body>
+    <h1>Restaurant Week Finder</h1>
     <div id="inputWrapper">
-      Find a
-      <input title="Enter a name, neighborhood, genre, or anything else!" class="rinput" id="rSearch" type="text"></input>
-      restaurant near
+      Find
+      <input title="Enter a name, neighborhood, genre, days, or anything else!" class="rinput" id="rSearch" type="text"></input>
+      near
       <input class="rinput" title="Enter an address or landmark" id="address"></input>
-    <div>
-    <table id="rViewer" class="tableSorter">
-        <thead>
-        <tr>
-          <th>Name</th>
-          <th>Book</th>
-          <th>Directions</th>
-          <th>Genre</th>
-          <th>Neighborhood</th>
-          <th>Distance</th>
-          <th>Rating</th>
-        </tr>
-        <tbody id="rViewerBody">
-          {% for restaurant in restaurants %}
-        <tr>
-          <td>{{restaurant.name|escape}}<br/>
-            {% ifnotequal restaurant.ot_mf "" %}
-              Mon-Fri: {{restaurant.ot_mf|escape}}<br/>
-            {% endifnotequal %}
-            {%ifnotequal restaurant.ot_sun "" %}
-              Sun: {{restaurant.ot_sun|escape}}
-            {% endifnotequal %}
-          </td>
-          <td><a href=http://{{restaurant.ot_link|escape}}>Book</a></td>
-          <td><a href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a></td>
-          <td>{{restaurant.genre|escape}} </td>
-          <td>{{restaurant.neighborhood|escape}}</td>
-          <td id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</td>
-          <td><a href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}}</a></td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+      <br/>
+    </div>
+      <table id="rViewer" class="tableSorter">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Days</th>
+            <th>Directions</th>
+            <th>Genre</th>
+            <th>Neighborhood</th>
+            <th>Distance</th>
+            <th>Rating</th>
+          </tr>
+          <tbody id="rViewerBody">
+            {% for restaurant in restaurants %}
+          <tr>
+            <td><p class="rname">{{restaurant.name|escape}}</p>
+              <a href=http://{{restaurant.ot_link|escape}}>Make a Reservation</a>
+            </td>
+            <td>
+              {% ifnotequal restaurant.ot_mf "" %}
+                Mon-Fri: {{restaurant.ot_mf|escape}}<br/>
+              {% endifnotequal %}
+              {%ifnotequal restaurant.ot_sun "" %}
+                Sun: {{restaurant.ot_sun|escape}}<br/>
+              {% endifnotequal %}
+            </td>
+            <td><a href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a></td>
+            <td>{{restaurant.genre|escape}} </td>
+            <td>{{restaurant.neighborhood|escape}}</td>
+            <td id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</td>
+            <td><a href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}}</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     <br />
+    <footer>
+      Made by <a href="mailto:sidnair09@gmail.com">Sid Nair</a>. Please e-mail me if you have any comments or critiques.
+    </footer>
 
     <script src="js/jquery-1.5.min.js"></script>
     <script src="js/jquery.tablesorter.min.js"></script>
