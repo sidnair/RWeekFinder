@@ -3,25 +3,32 @@
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
   </head>
   <body>
-    <input class="rinput" id="rSearch" type="text"></input>
-    <input class="rinput" id="address"></input>
+    <div id="inputWrapper">
+      <input class="rinput" id="rSearch" type="text"></input>
+      <input class="rinput" id="address"></input>
+    <div>
     <br />
     <table id="rViewer" class="tableSorter">
         <thead>
         <tr>
           <th>Name</th>
+          <th>Book</th>
+          <th>Directions</th>
           <th>Genre</th>
           <th>Neighborhood</th>
+          <th>Distance</th>
           <th>Rating</th>
         </tr>
         <tbody id="rViewerBody">
        {% for restaurant in restaurants %}
         <tr>
-          <td><a href=http://{{restaurant.opentable_link|escape}}>Book</a> - {{restaurant.name|escape}}</td>
-          <!--          <td> <a href=http://{{restaurant.opentable_link|escape}}>{{restaurant.opentable_link|escape}}</a> </td> -->
-          <td> {{restaurant.genre|escape}} </td>
-          <td> {{restaurant.neighborhood|escape}}</td>
-          <td> {{restaurant.rating|escape}} </td>
+          <td>{{restaurant.name|escape}}</td>
+          <td><a href=http://{{restaurant.opentable_link|escape}}>Book</a></td>
+          <td><a href='#' id="{{restaurant.name|normalize|escape}}Directions">Directions</a></td>
+          <td>{{restaurant.genre|escape}} </td>
+          <td>{{restaurant.neighborhood|escape}}</td>
+          <td id="{{restaurant.name|normalize|escape}}Distance">N/A</td>
+          <td>{{restaurant.rating|escape}} </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -40,5 +47,20 @@
     <script src="js/jquery.quicksearch.js"></script>
     <script src="js/rlist.js"></script>
     <script src="js/rweekfinder.js"></script>
+    <script>
+      var rests = {}
+      {% for r in restaurants %}
+        var name = "{{r.name|normalize|escape}}";
+        name = name.replace(/ /g, '').toLowerCase();
+        rests[name] = {};
+        rests[name].name = "{{r.name|normalize|escape}}";
+        rests[name].opentable_link = "{{r.opentable_link|escape}}";
+        rests[name].address = "{{r.address|escape}}";
+        rests[name].lat = "{{r.lat|escape}}";
+        rests[name].lng = "{{r.lng|escape}}";
+      {% endfor %}
+      rweek.rests = rests;
+      writeRestaurants();
+    </script>
   </body>
 </html>
