@@ -16,7 +16,12 @@ class Restaurant(db.Model):
     rating = db.FloatProperty()
     date = db.DateTimeProperty(auto_now_add=True)
     yelp_link = db.StringProperty()
-    opentable_link = db.StringProperty()
+    yelp_id = db.StringProperty()
+    ot_link = db.StringProperty()
+    ot_genre = db.StringProperty()
+    ot_neighborhood = db.StringProperty()
+    ot_mf = db.StringProperty()
+    ot_sun = db.StringProperty()
     genre = db.StringProperty()
     neighborhood = db.StringProperty()
     address = db.StringProperty()
@@ -49,9 +54,10 @@ class Adder(webapp.RequestHandler):
     
     def addAll(self):
         ct = 0
-        for name in scraper.get_all():
-           ct += RestaurantMaker().make(name) 
-           if ct > 1:
+        cap = 5 
+        for rest in scraper.get_all():
+           ct += RestaurantMaker().make(rest)
+           if ct > cap:
                self.redirect('/')
                return
 
@@ -70,18 +76,45 @@ class RestaurantPostHandler(webapp.RequestHandler):
         RestaurantMaker().make(self.request.get('name'))
 
 class RestaurantMaker:
-    def make(self, r_name):
+
+    def getMeals(self, day, dict):
+        if day in dict:
+            if 'lunch' in dict[day] and 'dinner' in dict[day]:
+                return 'Lunch and Dinner'
+            elif 'lunch' in dict[day]:
+                return 'Lunch'
+            if 'dinner' in dict[day]:
+                return 'Dinner'
+        return ''
+
+    def make(self, rest_data):
+        r_name = rest_data['name']
         q = querier.Querier()
+        data = {}
+        data['ot_sun'] = self.getMeals('sunday', rest_data)
+        data['ot_mf'] = self.getMeals('monday', rest_data)
         rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = r_name).get()
         if rest is not None:
             return 0
         yelp_r = q.search_yelp(r_name)
         if yelp_r is None:
             return 0
-        data = {}
         data['name'] = r_name
-        data['opentable_link'] = q.get_opentable_link(r_name)
+        data['ot_genre'] = rest_data['cuisine']
+        data['ot_neighborhood'] = rest_data['neighborhood']
+        '''
+        data['ot_days'] = {
+                'm' : rest_data['monday'],
+                't' : rest_data['tuesday'],
+                'w' : rest_data['wednesday'],
+                'th': rest_data['thursday'],
+                'f' : rest_data['friday'] }
+        if 'sunday' in rest_data:
+            data['ot_days']['s'] = rest_data['sunday']
+        '''
+        data['ot_link'] = q.get_opentable_link(r_name)
         data['yelp_link'] = yelp_r[0]['url']
+        data['yelp_id'] = yelp_r[0]['id']
         data['rating'] = yelp_r[0]['avg_rating']
         data['lat'] = yelp_r[0]['latitude']
         data['lng'] = yelp_r[0]['longitude']
@@ -124,7 +157,7 @@ class RestaurantMaker:
         if rest is None:
             rest = Restaurant()
         rest.name = data['name']
-        rest.opentable_link = data['opentable_link']
+        rest.ot_link = data['ot_link']
         rest.yelp_link = data['yelp_link']
         rest.rating = data['rating']
         rest.neighborhood = data['neighborhood'] 
@@ -132,6 +165,9 @@ class RestaurantMaker:
         rest.lat = data['lat']
         rest.lng = data['lng']
         rest.address = data['address']
+        rest.ot_sun = data['ot_sun']
+        rest.ot_mf = data['ot_mf']
+        rest.yelp_id = data['yelp_id']
         rest.put()
 
 

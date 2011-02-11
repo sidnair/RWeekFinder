@@ -1,4 +1,4 @@
-import json
+from django.utils import simplejson as json
 import logging
 import urllib2
 import urllib

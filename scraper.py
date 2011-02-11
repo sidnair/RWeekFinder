@@ -45,7 +45,7 @@ def get_all():
 
     #db = get_database()
 
-    names = []
+    data = []
     for line in iterator:
         keep_going=True
         dicty =  {"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)}
@@ -65,6 +65,5 @@ def get_all():
         str_ls=total_dictify(str_ls)
         str_ls.update({"name":line.group(1),"neighborhood":line.group(3),"cuisine":line.group(4)})
         #db.restaurants.insert(str_ls)
-        names.append(line.group(1))
-    return names
-
+        data.append(str_ls)
+    return data
