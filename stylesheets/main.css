@@ -1,6 +1,7 @@
 body {
   font-family: Verdana, Helvetica, sans-serif;
   text-align:center;
+  padding-top:10px;
 }
 
 .rinput {
@@ -14,7 +15,7 @@ body {
 /* tables */
 table.tablesorter {
 	font-family:arial;
-	background-color: #CDCDCD;
+  background-color: #CDCDCD;
 	margin:10px 0pt 15px;
 	font-size: 8pt;
 	width: 70%;
@@ -36,6 +37,7 @@ table.tablesorter thead tr .header {
 	background-position: center right;
 	cursor: pointer;
 }
+
 table.tablesorter tbody td {
 	color: #3D3D3D;
 	padding: 4px;
@@ -62,3 +64,4 @@ table.tablesorter thead tr .header {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
   background-color: #8dbdd8;
 }
+
