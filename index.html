@@ -17,7 +17,6 @@
           <tr>
             <th>Name</th>
             <th>Days</th>
-            <th>Directions</th>
             <th>Genre</th>
             <th>Neighborhood</th>
             <th>Distance</th>
@@ -37,10 +36,12 @@
                 Sun: {{restaurant.ot_sun|escape}}<br/>
               {% endifnotequal %}
             </td>
-            <td><a href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a></td>
             <td>{{restaurant.genre|escape}} </td>
             <td>{{restaurant.neighborhood|escape}}</td>
-            <td id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</td>
+            <td>
+              <span id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</span><br/>
+              <a href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a>
+            </td>
             <td><a href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}}</a></td>
           </tr>
           {% endfor %}
