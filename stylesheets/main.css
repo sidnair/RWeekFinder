@@ -79,3 +79,41 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
   font-weight:bold;
   margin-bottom:1px;
 }
+
+/*
+#bodyWrapper{
+  height:30px;
+  overflow:auto;
+}
+
+div.scrollWrapper{
+  float:left;
+  overflow:visible !important;
+  overflow:scroll;
+  height:10px;
+}
+
+table.tableSorter{
+  width:450px;
+  margin-right:0 !important;
+  margin-right:16px;
+  border-collapse:separate;
+}
+
+table.tableSorter th{
+  padding:5px;
+  position: relative;
+}
+
+table.tableSorter tbody{
+  height:10px;
+  overflow:auto;
+}
+
+table.tableSorter tr{
+  height:0px;
+}
+
+table.tableSorter td{
+}
+*/
