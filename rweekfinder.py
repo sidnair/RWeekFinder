@@ -93,7 +93,8 @@ class RestaurantMaker:
         data = {}
         data['ot_sun'] = self.getMeals('sunday', rest_data)
         data['ot_mf'] = self.getMeals('monday', rest_data)
-        rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = r_name).get()
+        r_name_utf = r_name.decode('utf-8')
+        rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = r_name_utf).get()
         if rest is not None:
             return 0
         yelp_r = q.search_yelp(r_name)
@@ -102,16 +103,6 @@ class RestaurantMaker:
         data['name'] = r_name
         data['ot_genre'] = rest_data['cuisine']
         data['ot_neighborhood'] = rest_data['neighborhood']
-        '''
-        data['ot_days'] = {
-                'm' : rest_data['monday'],
-                't' : rest_data['tuesday'],
-                'w' : rest_data['wednesday'],
-                'th': rest_data['thursday'],
-                'f' : rest_data['friday'] }
-        if 'sunday' in rest_data:
-            data['ot_days']['s'] = rest_data['sunday']
-        '''
         data['ot_link'] = q.get_opentable_link(r_name)
         data['yelp_link'] = yelp_r[0]['url']
         data['yelp_id'] = yelp_r[0]['id']
@@ -123,19 +114,6 @@ class RestaurantMaker:
         data['genre'] = self.stringify(yelp_r[0]['categories'], ['name']) 
         data['neighborhood'] = self.stringify(yelp_r[0]['neighborhoods'], ['name'])
         data['address'] = yelp_r[0]['address1']
-        '''
-        if yelp_r[0]['address2'] != '':
-            data['address'] += ', ' + yelp_r[0]['address2']
-        if yelp_r[0]['address3'] != '':
-            data['address'] += ', ' + yelp_r[0]['address3']
-        data['address'] += ', ' + yelp_r[0]['zip']
-        data['neighborhood'] = ''
-        for hood in yelp_r[0]['neighborhoods']:
-            data['neighborhood'] += hood['name'] + ","
-        data['genre'] = ''
-        for cat in yelp_r[0]['categories']:
-            data['genre'] = cat['name'] + ","
-        '''
         self.add(data)
         return 1
 
@@ -153,10 +131,12 @@ class RestaurantMaker:
         return ', '.join(s)
 
     def add(self, data):
-        rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = data['name']).get()
+        utf_name = data['name'].decode('utf-8')
+        rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = utf_name).get()
         if rest is None:
             rest = Restaurant()
-        rest.name = data['name']
+        #rest.name = data['name']
+        rest.name = utf_name
         rest.ot_link = data['ot_link']
         rest.yelp_link = data['yelp_link']
         rest.rating = data['rating']
@@ -168,6 +148,8 @@ class RestaurantMaker:
         rest.ot_sun = data['ot_sun']
         rest.ot_mf = data['ot_mf']
         rest.yelp_id = data['yelp_id']
+        rest.ot_genre = data['ot_genre']
+        rest.ot_neighborhood = data['ot_neighborhood']
         rest.put()
 
 
