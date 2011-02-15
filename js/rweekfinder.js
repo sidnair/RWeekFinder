@@ -133,10 +133,23 @@ function updateAddress(loc) {
 
 }
 
+
+
 function displayAddressError() {
    $("#addressError").fadeIn(); 
 }
 
+//does zebra effect on search
+function switchRowColor() {
+  this.style.display = '';
+  if(rweek.lastRow === 'even') {
+    this.className = this.className.replace(/event|odd/g, '') + ' odd';
+    rweek.lastRow = 'odd';
+  } else {
+    this.className = this.className.replace(/event|odd/g, '') + ' even';
+    rweek.lastRow = 'even';
+  }
+}
 
 $(document).ready(function(){
 
@@ -148,7 +161,11 @@ $(document).ready(function(){
       e.preventDefault();
     });
 
-  $('input#rSearch').quicksearch('table#rViewer tbody tr');
+  rweek.lastRow = 'even';
+  $('input#rSearch').quicksearch('table#rViewer tbody tr', {
+    onBefore:function() { rweek.lastRow = 'even'; },
+    show:switchRowColor
+  });
   
   $('#address').blur(function() {
       updateAddress(this.value);
