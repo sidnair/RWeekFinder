@@ -164,12 +164,12 @@ $(document).ready(function(){
     });
 
   rweek.lastRow = 'even';
-  /*
+  
   $('input#rSearch').quicksearch('table#rViewer tbody tr', {
     onBefore:function() { rweek.lastRow = 'even'; },
     show:switchRowColor
     //onAfter:function() { $('#rViewer').trigger("update"); }
-  });*/
+  });
   
   $('#address').blur(function() {
       updateAddress(this.value);
