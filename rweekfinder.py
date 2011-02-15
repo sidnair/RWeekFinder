@@ -1,3 +1,4 @@
+import logging
 import renderer
 import querier
 import scraper
@@ -34,20 +35,11 @@ class MainPage(webapp.RequestHandler):
         template_values = {
             'restaurants': restaurants_query
         }
+        logging.info('===RESTAURANT LIST===')
+        for r in restaurants_query:
+            logging.info(r.name)
         renderer.render(self, 'index.html', template_values)
-        '''
-        RestaurantMaker().add({
-            'name':'Perilla',
-            'genre':'New American',
-            'neighborhood':'Ghetto',
-            'opentable_link':querier.Querier().get_opentable_link('Perilla'),
-            'yelp_link':'ylink',
-            'rating':4.0,
-            "lat": 40.7322680,
-            "lng": -74.0017980',
-            'address':'9 Jones Street'
-            })
-        '''
+
 class Adder(webapp.RequestHandler):
     def get(self):
         self.addAll()
@@ -95,11 +87,13 @@ class RestaurantMaker:
         data['ot_mf'] = self.getMeals('monday', rest_data)
         r_name_utf = r_name.decode('utf-8')
         rest = db.GqlQuery("SELECT * FROM Restaurant WHERE name = :name", name = r_name_utf).get()
+        #don't store duplicates
         if rest is not None:
             return 0
         yelp_r = q.search_yelp(r_name)
         if yelp_r is None:
             return 0
+        logging.info(r_name)
         data['name'] = r_name
         data['ot_genre'] = rest_data['cuisine']
         data['ot_neighborhood'] = rest_data['neighborhood']
@@ -155,8 +149,8 @@ class RestaurantMaker:
 
 application = webapp.WSGIApplication(
                                      [('/', MainPage),
-                                      ('/findrestaurant', RestaurantSearchHandler),
-                                      ('/addrestaurant', RestaurantPostHandler),
+                                      #('/findrestaurant', RestaurantSearchHandler),
+                                      #('/addrestaurant', RestaurantPostHandler),
                                       ('/addall', Adder)],
                                      debug=True)
 def main():

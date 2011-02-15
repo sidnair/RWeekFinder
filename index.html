@@ -11,6 +11,8 @@
       near
       <input class="rinput" title="Enter an address or landmark" id="address"></input>
       <br/>
+      <span class="uiError" id="addressError">Address not found or too far away.</span>
+      <br/>
     </div>
       <table id="rViewer" class="tableSorter">
         <thead>
@@ -27,7 +29,7 @@
             {% for restaurant in restaurants %}
           <tr>
             <td><p class="rname">{{restaurant.name|escape}}</p>
-              <a href=http://{{restaurant.ot_link|escape}}>Make a Reservation</a>
+              <a class="extLink" href=http://{{restaurant.ot_link|escape}}>Make a Reservation</a>
             </td>
             <td>
               {% ifnotequal restaurant.ot_mf "" %}
@@ -41,16 +43,16 @@
             <td>{{restaurant.neighborhood|escape}}</td>
             <td>
               <span id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</span><br/>
-              <a href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a>
+              <a class="extLink" href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a>
             </td>
-            <td><a href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}}</a></td>
+            <td><a class="extLink" href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}}</a></td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     <br />
     <footer>
-      Made by <a href="mailto:sidnair09@gmail.com">Sid Nair</a>. Feel free to e-mail me with any comments or critiques.
+    Made by <a href="mailto:sidnair09@gmail.com">Sid Nair</a>. Feel free to e-mail us with any comments or critiques.
     </footer>
 
     <script src="js/jquery-1.5.min.js"></script>

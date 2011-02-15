@@ -3,6 +3,7 @@ This program fetches data for all the restaurant week restaurants and then prese
 Note that this dynamically fetches restuarant links to yelp and opentable. It's possible that this fetches an incorrect link because Yelp's search engine isn't great.
 
 TODO:
+  -some directions don't work
   -open links in new tabs rather than changing page
   -table scrollable
   -select restaurants to compare/hide?

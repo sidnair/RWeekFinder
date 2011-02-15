@@ -4,6 +4,11 @@ body {
   padding-top:10px;
 }
 
+.uiError {
+  color:red;
+  display:none;
+}
+
 .rinput {
   font-size:13pt;
 }
