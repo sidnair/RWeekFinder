@@ -48,6 +48,7 @@ function updateRestTable() {
     var start = $('#address')[0].value;
     start = start === 'Enter Address' ? 'Columbia University' : start;
     el.href = "http://maps.google.com/maps?f=d&source=s_d&daddr=" + end + "&saddr=" + start;
+    el.innerHTML = 'Directions';
   }
 
   function unesc(name) {
@@ -122,7 +123,6 @@ function updateAddress(loc) {
         if(updateRestTable()) {
           //TODO - UPDATE TABLE BASED ON EXISTING USER CHOICES
           $("#rViewer").trigger('update');
-          console.log($("#rViewer").config);
           $("#rViewer").trigger('sorton', [[[5,1], [4,0]]]);
         }
       } else {
