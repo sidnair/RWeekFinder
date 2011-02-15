@@ -3,12 +3,6 @@ rweek["lat"] = 40.8080250;
 rweek["lng"] = -73.9621343;
 
 function updateRestTable() {
-    $("#rViewer").tablesorter({
-        //default sort by rating from highest to lowest, then closest to furthest away 
-        sortList:[[5, 1], [4,0]],
-        widgets:['zebra']
-      });
-
     for(var i in rweek.rests) {
         if(updateDistance(i, rweek.rests[i].yelp_id)) {
           updateDirectionLink(i, rweek.rests[i].yelp_id);
@@ -16,9 +10,10 @@ function updateRestTable() {
           displayAddressError();
           return false;
         }
-    }
-    return true;
+    }    
     
+    return true;
+
   function updateDistance(name, id) {
     var el = $('#' + id + 'Distance')[0];
     var dLat = rweek.rests[name].lat;
@@ -124,7 +119,12 @@ function updateAddress(loc) {
       if (status == google.maps.GeocoderStatus.OK && results[0] && results[0].geometry && results[0].geometry.location) {
         rweek.lat = results[0].geometry.location.lat();
         rweek.lng = results[0].geometry.location.lng();
-        updateRestTable();
+        if(updateRestTable()) {
+          //TODO - UPDATE TABLE BASED ON EXISTING USER CHOICES
+          $("#rViewer").trigger('update');
+          console.log($("#rViewer").config);
+          $("#rViewer").trigger('sorton', [[[5,1], [4,0]]]);
+        }
       } else {
         displayAddressError();
       }
@@ -132,8 +132,6 @@ function updateAddress(loc) {
   }
 
 }
-
-
 
 function displayAddressError() {
    $("#addressError").fadeIn(); 
@@ -152,8 +150,12 @@ function switchRowColor() {
 }
 
 $(document).ready(function(){
-
   updateRestTable();
+  $("#rViewer").tablesorter({
+      //default sort by rating from highest to lowest, then closest to furthest away 
+      sortList:[[5, 1], [4,0]],
+      widgets:['zebra']
+    });
 
   $('.extLink').click(function(e) {
       //open link in new window or tab, depending on browser
@@ -162,10 +164,12 @@ $(document).ready(function(){
     });
 
   rweek.lastRow = 'even';
+  /*
   $('input#rSearch').quicksearch('table#rViewer tbody tr', {
     onBefore:function() { rweek.lastRow = 'even'; },
     show:switchRowColor
-  });
+    //onAfter:function() { $('#rViewer').trigger("update"); }
+  });*/
   
   $('#address').blur(function() {
       updateAddress(this.value);

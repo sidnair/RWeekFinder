@@ -7,7 +7,7 @@
     <h1>Restaurant Week Finder</h1>
     <div id="inputWrapper">
       Find
-      <input title="Enter a name, neighborhood, genre, days, or anything else!" class="qtipped rinput" id="rSearch" type="text"></input>
+      <input title="Enter a name, neighborhood, cuisine, or anything else!" class="qtipped rinput" id="rSearch" type="text"></input>
       near
       <input class="qtipped rinput" title="Enter an address or landmark" id="address"></input>
       <br/>
@@ -19,7 +19,7 @@
           <tr>
             <th>Name</th>
             <th>Days</th>
-            <th>Genre</th>
+            <th>Cuisine</th>
             <th>Neighborhood</th>
             <th>Distance</th>
             <th>Rating</th>
@@ -45,7 +45,7 @@
               <span id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</span><br/>
               <a class="extLink" href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions">Directions</a>
             </td>
-            <td><a class="extLink" href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}}</a></td>
+            <td><a class="extLink" href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}} - Reviews</a></td>
           </tr>
           {% endfor %}
         </tbody>
