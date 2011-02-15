@@ -83,20 +83,34 @@ function setHolderText(selector, text) {
 }
 
 function makeQTips() {
-  $('.rinput').qtip({
+  var blueStyle = {
+    name:'blue',
+    padding: '7px 13px',
+    tip: true
+  }
+
+
+  $('#rViewer thead tr th').qtip({
+      content:'Click to sort. Hold shift to sort by multiple criteria.',
+      position:{
+      corner:{
+          target:'topMiddle',
+          tooltip:'bottomLeft'
+        }
+      },
+      style:blueStyle
+    });
+
+  $('.qtipped').qtip({
       content:false,
       position:{
       corner:{
           target:'bottomRight',
-          toolTip:'bottomLeft'
+          tooltip:'topLeft'
         }
       },
-      style:{ 
-        name:'blue',
-        padding: '7px 13px',
-        tip: true
-        }
-      });
+      style:blueStyle
+  });
 }
 
 function updateAddress(loc) {
@@ -128,15 +142,6 @@ $(document).ready(function(){
 
   updateRestTable();
 
-  /*
-  $('.extLink').each(function(index, element) {
-    console.log(this);
-    this.click(function(e) {
-      e.preventDefault();
-    });
-  });
-  */
-
   $('.extLink').click(function(e) {
       //open link in new window or tab, depending on browser
       window.open(this.href);
@@ -158,8 +163,8 @@ $(document).ready(function(){
 
   setHolderText('#rSearch', 'Restaurants'); 
   setHolderText('#address', 'Columbia University');
-  makeQTips();
 
+  makeQTips();
 });
 
 
