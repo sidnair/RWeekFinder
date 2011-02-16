@@ -16,12 +16,14 @@ The commenting on the files is a little sparse, but I think most of the function
 ===TODO===
 These features will be done for the next restaurant week since I'm busy right now, but, if you're interested in implementhing this features, feel free to let me know and I can give you access.
 
+Wishlist:
   -on location change, re-sort table based on current user criteria
   -make table scrollable and fit within page, so user doesn't need to scroll down to view the table. That way, the user doesn't need to scroll back up to change search criteria.
   -select restaurants to compare/hide?
   -show travel time using subway since this often doesn't correspond to distance
   -save state so users can bookmark pages
   -automatically detect location instead of setting columbia as default; this would be especially useful for mobile users
+  -change Yelp search algorithm to make sure the address of the result matches the address from the OpenTable page.
 
 ====DATABASE STUFF====
 Moses scraped some data from opentable to get a list of all the restaurants participating and the days on which they are participating. Here's how to access that info:
@@ -38,3 +40,12 @@ if you want to access from the console:
 mongo flame.mongohq.com:27041/RWeek -u <user> -p<password>
 
 if you want to set up a read-only acct, email me @ nnythm@gmail.com, my github acct is mnn2104
+
+====CONTRIBUTORS====
+I, Sid Nair, wrote most of the app. Moses Nakamura helped with scraping the list of restaurants from OpenTable.
+
+Some awesome jQuery plugins that saved me a lot of time:
+  quickSearch: http://lomalogue.com/jquery/quicksearch/
+  qTip: http://craigsworks.com/projects/qtip/
+  TableSorter: http://tablesorter.com/docs/
+
