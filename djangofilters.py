@@ -14,3 +14,4 @@ def clean_link(value):
     return value
  
 register.filter(normalize)
+register.filter(clean_link)

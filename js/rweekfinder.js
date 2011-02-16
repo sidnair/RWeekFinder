@@ -150,6 +150,10 @@ function switchRowColor() {
 }
 
 $(document).ready(function(){
+  
+  setHolderText('#rSearch', 'Restaurants'); 
+  setHolderText('#address', 'Columbia University');
+
   updateRestTable();
   $("#rViewer").tablesorter({
       //default sort by rating from highest to lowest, then closest to furthest away 
@@ -182,10 +186,11 @@ $(document).ready(function(){
       }
     });
 
-  setHolderText('#rSearch', 'Restaurants'); 
-  setHolderText('#address', 'Columbia University');
-
   makeQTips();
-});
 
+  $('.otLink').each(function() {
+      this.href = this.href.replace(/https\/\//, '');
+    });
+
+});
 
