@@ -30,7 +30,7 @@
             {% for restaurant in restaurants %}
           <tr>
             <td><p class="rname">{{restaurant.name|escape}}</p>
-              <a class="extLink otLink" href=http://{{restaurant.ot_link|escape|clean_link}}>Make a Reservation</a>
+              <a class="extLink otLink" href=http://{{restaurant.ot_link|escape}}>Make a Reservation</a>
             </td>
             <td>
               {% ifnotequal restaurant.ot_mf "" %}
