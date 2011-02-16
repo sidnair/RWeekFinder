@@ -3,10 +3,10 @@ This program fetches data for all the restaurant week restaurants and then prese
 Note that this dynamically fetches restuarant links to yelp and opentable. It's possible that this fetches an incorrect link because Yelp's search engine isn't great.
 
 TODO:
-  -some directions don't work
   -on location change, resort table based on current user criteria
   -make table scrollable and fit without scrolling down page
   -select restaurants to compare/hide?
+  -show time using subway
 
 ====DATABASE STUFF====
 Moses scraped some data from opentable to get a list of all the restaurants participating and the days on which they are participating. Here's how to access that info:

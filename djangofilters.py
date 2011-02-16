@@ -8,10 +8,5 @@ def normalize(value):
     value = value.replace(' ', '').lower()
     value = re.sub(' |&|<|>', '', value)
     return value
-
-def clean_link(value):
-    value = value.replace('https//', '')
-    return value
  
 register.filter(normalize)
-register.filter(clean_link)

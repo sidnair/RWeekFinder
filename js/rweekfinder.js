@@ -1,7 +1,12 @@
 var rweek = {};
+//set default lat and long in case google maps api request fails
 rweek["lat"] = 40.8080250;
 rweek["lng"] = -73.9621343;
 
+/*
+ * Update the distances and directions in the table - for when the user
+ * updates location. true/false indicates success/failure.
+ */
 function updateRestTable() {
     for(var i in rweek.rests) {
         if(updateDistance(i, rweek.rests[i].yelp_id)) {
@@ -11,9 +16,9 @@ function updateRestTable() {
           return false;
         }
     }    
-    
     return true;
 
+  //calculate and update distance
   function updateDistance(name, id) {
     var el = $('#' + id + 'Distance')[0];
     var dLat = rweek.rests[name].lat;
@@ -26,6 +31,7 @@ function updateRestTable() {
       return false;
     }
 
+    //use formula to calculate distance in miles
     function getDistance(sLat, sLng, dLat, dLng, units) {
       units = units || 'mi';
       var r_map = {
@@ -42,15 +48,19 @@ function updateRestTable() {
     }
   }
 
+  //update direction links
   function updateDirectionLink(name, id) {
     var el = $('#' + id + 'Directions')[0];
     var end = rweek.rests[name].address;
     var start = $('#address')[0].value;
     start = start === 'Enter Address' ? 'Columbia University' : start;
-    el.href = "http://maps.google.com/maps?f=d&source=s_d&daddr=" + end + "&saddr=" + start;
+    //generate actual link instead of using API - looked at google map url and just copied relevant parameters
+    //dirflg=r makes public transportation default (thought this would be the most useful since this is NY)
+    el.href = "http://maps.google.com/maps?f=d&source=s_d&daddr=" + end + "&saddr=" + start + '&dirflg=r';
     el.innerHTML = 'Directions';
   }
 
+  //so id fetching works
   function unesc(name) {
     console.log(unescape(name.replace(/&amp;|&lt;|&gt;/g, '').replace('/', '\\/')));
     return unescape(name.replace(/&amp;|&lt;|&gt;/g, '').replace('/', '\\/'));
@@ -61,6 +71,9 @@ function updateRestTable() {
   }
 }
 
+//sets a default value for a text field
+//selector: CSS selector to get text field
+//text: default message
 function setHolderText(selector, text) {
 
   $(selector)[0].value = text;
@@ -78,13 +91,13 @@ function setHolderText(selector, text) {
     });
 }
 
+//register all the tips
 function makeQTips() {
   var blueStyle = {
     name:'blue',
     padding: '7px 13px',
     tip: true
   }
-
 
   $('#rViewer thead tr th').qtip({
       content:'Click to sort. Hold shift to sort by multiple criteria.',
@@ -109,7 +122,9 @@ function makeQTips() {
   });
 }
 
+//update address by querying googel
 function updateAddress(loc) {
+  //hide error if it is showing
   $('#addressError').fadeOut();
   if(loc === '') return;
   geocoder = new google.maps.Geocoder();
@@ -121,7 +136,7 @@ function updateAddress(loc) {
         rweek.lat = results[0].geometry.location.lat();
         rweek.lng = results[0].geometry.location.lng();
         if(updateRestTable()) {
-          //TODO - UPDATE TABLE BASED ON EXISTING USER CHOICES
+          //TODO - UPDATE TABLE BASED ON EXISTING USER CHOICES RATHER THAN FORCING THIS
           $("#rViewer").trigger('update');
           $("#rViewer").trigger('sorton', [[[5,1], [4,0]]]);
         }
@@ -133,6 +148,7 @@ function updateAddress(loc) {
 
 }
 
+//encapsulates display of error
 function displayAddressError() {
    $("#addressError").fadeIn(); 
 }
@@ -166,8 +182,6 @@ $(document).ready(function(){
       window.open(this.href);
       e.preventDefault();
     });
-
-  rweek.lastRow = 'even';
   
   $('input#rSearch').quicksearch('table#rViewer tbody tr', {
     onBefore:function() { rweek.lastRow = 'even'; },

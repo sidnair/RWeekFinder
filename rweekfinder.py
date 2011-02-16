@@ -13,7 +13,6 @@ webapp.template.register_template_library('djangofilters')
 
 class Restaurant(db.Model):
     name = db.StringProperty()
-    #description = db.StringProperty(multiline=True)
     rating = db.FloatProperty()
     date = db.DateTimeProperty(auto_now_add=True)
     yelp_link = db.StringProperty()
@@ -35,10 +34,24 @@ class MainPage(webapp.RequestHandler):
         template_values = {
             'restaurants': restaurants_query
         }
-        logging.info('===RESTAURANT LIST===')
-        for r in restaurants_query:
-            logging.info(r.name)
         renderer.render(self, 'index.html', template_values)
+
+application = webapp.WSGIApplication(
+                                     [('/', MainPage)],
+                                      #('/findrestaurant', RestaurantSearchHandler),
+                                      #('/addrestaurant', RestaurantPostHandler),
+                                      #('/addall', Adder)],
+                                     debug=True)
+def main():
+    run_wsgi_app(application)
+
+if __name__ == "__main__":
+    main()
+
+"""
+Old code for registering stuff in the database.
+
+Not all of this was used, but this is here to clean up for future restaurant weeks.
 
 class Adder(webapp.RequestHandler):
     def get(self):
@@ -145,17 +158,4 @@ class RestaurantMaker:
         rest.ot_genre = data['ot_genre']
         rest.ot_neighborhood = data['ot_neighborhood']
         rest.put()
-
-
-application = webapp.WSGIApplication(
-                                     [('/', MainPage),
-                                      #('/findrestaurant', RestaurantSearchHandler),
-                                      #('/addrestaurant', RestaurantPostHandler),
-                                      ('/addall', Adder)],
-                                     debug=True)
-def main():
-    run_wsgi_app(application)
-
-if __name__ == "__main__":
-    main()
-
+"""

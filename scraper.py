@@ -1,3 +1,7 @@
+'''
+This file was written by Moses Nakamura, with only a few trivial modifications by Sid.
+'''
+
 #import pymongo
 #from pymongo import Connection
 import re
