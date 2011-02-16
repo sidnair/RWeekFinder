@@ -1,12 +1,27 @@
-This program fetches data for all the restaurant week restaurants and then presents that information so it's easy for peopel to find good restaurants to go to. Currently, sorting by distance or rating (to my knowledge) is not available. Hopefully, this app will make it easy to find good restaurants to go to.
+====ABOUT====
+This program fetches data for all the restaurant week restaurants and then presents that information so it's easy for peopel to find good restaurants to go to. Currently, sorting by distance or rating (to my knowledge) is not available in other applications. Hopefully, this app will make it easy to find good restaurants to go to.  
 
-Note that this dynamically fetches restuarant links to yelp and opentable. It's possible that this fetches an incorrect link because Yelp's search engine isn't great.
+Note that this dynamically fetches restuarant links to yelp and opentable. It's possible that this fetches an incorrect link because Yelp's search engine isn't great. It takes a long time to scrape all Yelp's data since they rate limit you and they're slow to respond to applications for a higher rate limit, so, though I have an idea for a better scraping algorithm (see TODO), this will have to wait till the summer 11 restaurant week.
 
-TODO:
-  -on location change, resort table based on current user criteria
-  -make table scrollable and fit without scrolling down page
+===HOW TO GET STARTED===
+1) Install Google App Engine. Their Getting Started tutorial is thorough, so follow that if you're lost.
+2) Initialize this git repo somewere. 
+3) From the google_appengine directory, run ./dev_appserver.py path/to/git/repo.
+4) Check results on localhost:8080
+
+Again, detailed instructions are on Google's website.
+
+The commenting on the files is a little sparse, but I think most of the function/var names are self-documenting, especially if you have some familiarity with Python/App Engine.
+
+===TODO===
+These features will be done for the next restaurant week since I'm busy right now, but, if you're interested in implementhing this features, feel free to let me know and I can give you access.
+
+  -on location change, re-sort table based on current user criteria
+  -make table scrollable and fit within page, so user doesn't need to scroll down to view the table. That way, the user doesn't need to scroll back up to change search criteria.
   -select restaurants to compare/hide?
-  -show time using subway
+  -show travel time using subway since this often doesn't correspond to distance
+  -save state so users can bookmark pages
+  -automatically detect location instead of setting columbia as default; this would be especially useful for mobile users
 
 ====DATABASE STUFF====
 Moses scraped some data from opentable to get a list of all the restaurants participating and the days on which they are participating. Here's how to access that info:
