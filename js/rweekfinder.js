@@ -9,8 +9,8 @@ rweek["lng"] = -73.9621343;
  */
 function updateRestTable() {
     for(var i in rweek.rests) {
-        if(updateDistance(i, rweek.rests[i].yelp_id)) {
-          updateDirectionLink(i, rweek.rests[i].yelp_id);
+        if(updateDistance(i, rweek.rests[i].id)) {
+          updateDirectionLink(i, rweek.rests[i].id);
         } else {
           displayAddressError();
           return false;

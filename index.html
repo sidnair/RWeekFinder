@@ -1,5 +1,4 @@
 <html>
-  <!-- Full source available at https://github.com/sidnair09/RWeekFinder --> 
   <head>
     <link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
     <title>Restaurant Week Finder</title>
@@ -40,15 +39,17 @@
                 Sun: {{restaurant.ot_sun|escape}}<br/>
               {% endifnotequal %}
             </td>
-            <td>{{restaurant.genre|escape}} </td>
-            <td>{{restaurant.neighborhood|escape}}</td>
+            <td>{{restaurant.ot_genre|escape}} </td>
+            <td>{{restaurant.ot_neighborhood|escape}}</td>
             <td>
               <span id="{{restaurant.yelp_id|normalize|escape}}Distance">N/A</span><br/>
               <a class="extLink" href='#' id="{{restaurant.yelp_id|normalize|escape}}Directions"></a>
             </td>
             <td>
               {% ifnotequal restaurant.yelp_link None%}
-                <a class="extLink" href="{{restaurant.yelp_link|normalize|escape}}">{{restaurant.rating|escape}} - Reviews</a>
+                {{restaurant.rating|escape}}
+                <br / >
+                <a class="extLink" href="{{restaurant.yelp_link|normalize|escape}}">Yelp</a>
               {% else %}
                 N/A
               {% endifnotequal %}
@@ -66,7 +67,6 @@
     <script src="js/jquery-1.5.min.js"></script>
     <script src="js/jquery.tablesorter.min.js"></script>
     <script src="js/jquery.quicksearch.js"></script>
-    <script src="js/rlist.js"></script>
     <script src="js/jquery.qtip-1.0.0-rc3.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> 
     <script src="js/rweekfinder.js"></script>
@@ -76,6 +76,7 @@
         var name = "{{r.name|normalize|escape}}";
         name = name.replace(/ /g, '').toLowerCase();
         rests[name] = {};
+        rests[name].id = "{{r.yelp_id|normalize|escape}}";
         rests[name].name = "{{r.name|normalize|escape}}";
         rests[name].ot_link = "{{r.ot_link|escape}}";
         rests[name].address = "{{r.address|escape}}";
