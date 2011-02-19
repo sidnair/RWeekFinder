@@ -173,7 +173,9 @@ $(document).ready(function(){
   updateRestTable();
   $("#rViewer").tablesorter({
       //default sort by rating from highest to lowest, then closest to furthest away 
-      sortList:[[5, 1], [4,0]],
+      //sortList:[[5, 1], [4,0]],
+      //default sort by distance
+      sortList:[[4,0]],
       widgets:['zebra']
     });
 

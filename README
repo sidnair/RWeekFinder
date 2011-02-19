@@ -17,6 +17,7 @@ The commenting on the files is a little sparse, but I think most of the function
 These features will be done for the next restaurant week since I'm busy right now, but, if you're interested in implementhing this features, feel free to let me know and I can give you access.
 
 Wishlist:
+  -change tablesorter parser so distances are sorted by double value and not lexographically, so that 2 miles < 13 miles
   -on location change, re-sort table based on current user criteria
   -make table scrollable and fit within page, so user doesn't need to scroll down to view the table. That way, the user doesn't need to scroll back up to change search criteria.
   -select restaurants to compare/hide?
